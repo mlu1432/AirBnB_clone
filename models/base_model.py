@@ -1,26 +1,24 @@
 #!/usr/bin/python3
 """Defines the BaseModel class."""
 import uuid
-from datetime import datetime
+from dateutil import parser
+from datetime import datetime, timezone
 
 class BaseModel:
     """Defines all common attributes/methods for other classes."""
 
     def __init__(self, *args, **kwargs):
-        """Initializes a new instance."""
+        """Initializes a new BaseModel instance."""
         if kwargs:
             for key, value in kwargs.items():
-                if key in ('created_at', 'updated_at'):
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                if key in ['created_at', 'updated_at']:
+                    value = parser.parse(value)
                 if key != '__class__':
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
-            now = datetime.now()
-            self.created_at = self.updated_at = now
-            # Delayed import and use of storage
-            self._register_instance()
-
+            self.created_at = self.updated_at = datetime.now()
+        
     def __str__(self):
         """Returns the string representation of the BaseModel instance."""
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
