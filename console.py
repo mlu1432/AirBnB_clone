@@ -15,7 +15,7 @@ class HBNBCommand(cmd.Cmd):
     """Class for the HBNB command interpreter."""
     prompt = '(hbnb) '
     class_dict = {
-         'BaseModel': BaseModel,
+        'BaseModel': BaseModel,
         'User': User,
         'Place': Place,
         'State': State,
@@ -30,29 +30,29 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """EOF command to exit the program."""
-        print()  # Print newline for nice EOF exit
         return True
 
     def emptyline(self):
-        """Called when an empty line is entered in response to the prompt."""
+        """An empty line + ENTER shouldn’t execute anything."""
         pass
 
     def do_create(self, arg):
-        """ Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id."""
-        if not arg:
+        """Creates a new instance of a class."""
+        args = arg.split()
+        if len(args) == 0:
             print("** class name missing **")
             return
-        if arg not in self.class_dict:
+        if args[0] not in self.class_dict:
             print("** class doesn't exist **")
             return
-        instance = self.class_dict[arg]()
+        instance = self.class_dict[args[0]]()
         instance.save()
         print(instance.id)
 
     def do_show(self, arg):
-        """ the string representation of an instance based on the class name and id."""
+        """Prints the string representation of an instance based on the class name and id."""
         args = arg.split()
-        if len(args) == 0:
+        if len(args) < 1:
             print("** class name missing **")
             return
         if args[0] not in self.class_dict:
@@ -68,9 +68,9 @@ class HBNBCommand(cmd.Cmd):
         print(storage.all()[key])
 
     def do_destroy(self, arg):
-        """ it deletes an instance based on the class name and id (save the change into the JSON file)."""
+        """Deletes an instance based on the class name and id."""
         args = arg.split()
-        if len(args) == 0:
+        if len(args) < 1:
             print("** class name missing **")
             return
         if args[0] not in self.class_dict:
@@ -87,15 +87,12 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, arg):
-        """Prints all string representation of all instances based or not on the class name."""
+        """Prints all instances based or not on the class name."""
         args = arg.split()
         if len(args) > 0 and args[0] not in self.class_dict:
             print("** class doesn't exist **")
             return
-        obj_list = []
-        for obj in storage.all().values():
-            if len(args) == 0 or obj.__class__.__name__ == args[0]:
-                obj_list.append(str(obj))
+        obj_list = [str(obj) for obj in storage.all().values() if len(args) == 0 or obj.__class__.__name__ == args[0]]
         print(obj_list)
 
     def do_update(self, arg):
