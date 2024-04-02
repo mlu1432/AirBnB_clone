@@ -1,0 +1,17 @@
+header {
+    background-color: white;
+    border-bottom: 1px solid #CCCCCC;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px; /* Space on the left for the logo */
+}
+
+.header-logo {
+    background-image: url('../images/logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 50px; /* Logo width - adjust as necessary */
+    height: 100%; /* Full height of the header */
+}

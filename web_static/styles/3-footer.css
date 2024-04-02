@@ -1,0 +1,9 @@
+footer {
+    background-color: white;
+    color: black; /* Footer text color, assuming it should be black or #484848 as in body */
+    border-top: 1px solid #CCCCCC;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
