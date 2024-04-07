@@ -1,0 +1,12 @@
+.search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Space between input and button */
+    margin: 20px 0;
+}
+
+.search-bar input, .search-bar button {
+    flex: 1 1 auto;
+    min-width: 150px; /* Minimum size, so elements don't become too small */
+}
